@@ -28,13 +28,13 @@ public class Employee {
     private String firstName;
     private String lastName;
 
-//    @ManyToOne(
-//            fetch = FetchType.EAGER,
-//            optional = false
-//    )
-//    @JoinColumn(
-//            name = "department_id",
-//            referencedColumnName = "departmentId"
-//    )
-//    private Department department;
+    @ManyToOne(
+            fetch = FetchType.EAGER,
+            optional = false
+    )
+    @JoinColumn(
+            name = "department_id",
+            referencedColumnName = "departmentId"
+    )
+    private Department department;
 }
