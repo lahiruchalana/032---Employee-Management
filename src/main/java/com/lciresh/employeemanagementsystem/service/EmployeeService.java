@@ -1,5 +1,6 @@
 package com.lciresh.employeemanagementsystem.service;
 
+import com.lciresh.employeemanagementsystem.exception.NoDataAvailableException;
 import com.lciresh.employeemanagementsystem.model.Employee;
 import com.lciresh.employeemanagementsystem.repository.EmployeeRepository;
 import jakarta.transaction.Transactional;
@@ -35,7 +36,7 @@ public class EmployeeService implements EmployeeServiceInterface {
         Optional<Employee> employee = employeeRepository.getEmployeeByEmployeeId(employeeId);
 
         if (employee.isEmpty()) {
-            throw new IllegalStateException("Employee not exist");
+            throw new NoDataAvailableException("Employee not exist");
         }
 
         return employee;
@@ -46,7 +47,7 @@ public class EmployeeService implements EmployeeServiceInterface {
         Optional<Employee> employeeOptional = employeeRepository.getEmployeeByEmployeeId(employeeId);
 
         if (employeeOptional.isEmpty()) {
-            throw new IllegalStateException("Employee not exist");
+            throw new NoDataAvailableException("Employee not exist");
         }
 
         employeeOptional.get().setFirstName(employee.getFirstName());
@@ -61,7 +62,7 @@ public class EmployeeService implements EmployeeServiceInterface {
         Optional<Employee> employeeOptional = employeeRepository.getEmployeeByEmployeeId(employeeId);
 
         if (employeeOptional.isEmpty()) {
-            throw new IllegalStateException("Employee not exist");
+            throw new NoDataAvailableException("Employee not exist");
         }
 
         Employee employee = employeeRepository.findEmployeeByEmployeeId(employeeId);
