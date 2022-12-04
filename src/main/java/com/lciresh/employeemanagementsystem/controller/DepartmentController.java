@@ -24,6 +24,6 @@ public class DepartmentController {
     public ResponseEntity<Department> saveNewDepartment(
             @RequestBody Department department
     ) {
-        return new ResponseEntity<>(departmentService.saveNewDepartment(department), HttpStatus.OK);
+        return new ResponseEntity<>(departmentService.saveNewDepartment(department), HttpStatus.CREATED);
     }
 }

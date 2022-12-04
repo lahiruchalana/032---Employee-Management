@@ -2,12 +2,14 @@ package com.lciresh.employeemanagementsystem.service;
 
 import com.lciresh.employeemanagementsystem.model.Employee;
 import com.lciresh.employeemanagementsystem.repository.EmployeeRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class EmployeeService implements EmployeeServiceInterface {
 
     private final EmployeeRepository employeeRepository;
@@ -17,27 +19,54 @@ public class EmployeeService implements EmployeeServiceInterface {
     }
 
     @Override
-    public Employee saveNewEmployee(Employee employee) {
-        return null;
+    public void saveNewEmployee(Employee employee) {
+        employeeRepository.save(employee);
     }
 
     @Override
     public List<Employee> getAllEmployees() {
-        return null;
+        List<Employee> employees = employeeRepository.findAll();
+
+        return employees;
     }
 
     @Override
     public Optional<Employee> getEmployeeById(Long employeeId) {
-        return Optional.empty();
+        Optional<Employee> employee = employeeRepository.getEmployeeByEmployeeId(employeeId);
+
+        if (employee.isEmpty()) {
+            throw new IllegalStateException("Employee not exist");
+        }
+
+        return employee;
     }
 
     @Override
-    public Employee updateEmployeeData(Long employeeId, Employee employee) {
-        return null;
+    public Optional<Employee> updateEmployeeData(Long employeeId, Employee employee) {
+        Optional<Employee> employeeOptional = employeeRepository.getEmployeeByEmployeeId(employeeId);
+
+        if (employeeOptional.isEmpty()) {
+            throw new IllegalStateException("Employee not exist");
+        }
+
+        employeeOptional.get().setFirstName(employee.getFirstName());
+        employeeOptional.get().setLastName(employee.getLastName());
+        employeeOptional.get().setDepartment(employee.getDepartment());
+
+        return employeeOptional;
     }
 
     @Override
     public Employee deleteEmployee(Long employeeId) {
-        return null;
+        Optional<Employee> employeeOptional = employeeRepository.getEmployeeByEmployeeId(employeeId);
+
+        if (employeeOptional.isEmpty()) {
+            throw new IllegalStateException("Employee not exist");
+        }
+
+        Employee employee = employeeRepository.findEmployeeByEmployeeId(employeeId);
+        employeeRepository.delete(employee);
+
+        return employee;
     }
 }

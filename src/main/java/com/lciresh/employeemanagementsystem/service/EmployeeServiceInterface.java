@@ -7,13 +7,13 @@ import java.util.Optional;
 
 public interface EmployeeServiceInterface {
 
-    Employee saveNewEmployee(Employee employee);
+    void saveNewEmployee(Employee employee);
 
     List<Employee> getAllEmployees();
 
     Optional<Employee> getEmployeeById(Long employeeId);
 
-    Employee updateEmployeeData(Long employeeId, Employee employee);
+    Optional<Employee> updateEmployeeData(Long employeeId, Employee employee);
 
     Employee deleteEmployee(Long employeeId);
 }
